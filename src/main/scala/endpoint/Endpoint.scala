@@ -47,9 +47,10 @@ class Endpoint(params: EndpointParams) extends Logging with JsonSupport with Aut
     validComponentStatuses.contains(component.status) && component.group_id.nonEmpty
   }
 
+  // should only be called on a valid component
   def transform(component: Component): CompactComponent = {
     CompactComponent(
-      composite_id = s"${component.page_id}|${component.group_id}".hashCode.toString,
+      composite_id = s"${component.page_id}|${component.group_id.get}".hashCode.toString,
       name = component.name,
       status = component.status
     )
